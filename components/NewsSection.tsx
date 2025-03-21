@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type Article = {
   id: number;
@@ -23,7 +24,6 @@ type NewsSectionProps = {
 
 const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   // Create a reversed copy of the news array
   const reversedNews = [...news].reverse();
@@ -35,9 +35,9 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute("data-index"));
+          entry.target.getAttribute("data-index");
           if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            setActiveIndex(index);
+            // Removed setActiveIndex(index);
           }
         });
       },
@@ -78,9 +78,11 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
           }`}
         >
           <div className="relative">
-            <img
+            <Image
               src={item.image}
               alt={item.title}
+              width={500}
+              height={300}
               className="w-full h-48 object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
