@@ -116,7 +116,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
           <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">1</button>
           <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">2</button>
           <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">3</button>
-          <span className="px-4 py-2 text-gray-600">...</span>
+          <span className="px-4 py-2 text-gray-600"></span>
           <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">8</button>
           <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-500 hover:bg-gray-50">Next</button>
         </nav>
