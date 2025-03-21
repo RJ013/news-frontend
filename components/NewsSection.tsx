@@ -26,18 +26,40 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
   const reversedNews = [...news].reverse();
 
   return (
-    // Added mx-auto and max-w-screen-xl to center the content and add maximum width
-    // Increased left and right padding with px-8 (or px-10 for even more space)
-    <div className="p-6 px-10 bg-gray-100 mx-auto max-w-screen-xl">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Latest News</h2>
+    // Added mx-auto to center the container and added specific margins
+    <div className="py-12 px-4 sm:px-8 lg:px-16 bg-gray-100 mx-auto max-w-screen-xl lg:max-w-screen-2xl" style={{ margin: "0 auto" }}>
+      {/* More responsive header with better font sizing for desktop */}
+      <div className="flex justify-between items-center mb-10">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">Latest News</h2>
+        <div className="hidden md:flex space-x-2">
+          <button className="px-3 py-2 bg-white text-gray-600 rounded-lg border border-gray-200 hover:bg-gray-50">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </button>
+          <button className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
       
-      {/* Grid layout for the cards with extra side margin */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
+      {/* Added mx-auto to center the grid and added specific margins */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mx-auto" style={{ maxWidth: "90%", margin: "0 auto" }}>
         {reversedNews.map((item, index) => (
-          // Each news item is a separate card
+          // Enhanced card with better hover effects for desktop
           <div
             key={`${item.id}-${index}`}
-            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
+            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
           >
             <div className="relative">
               <Image
@@ -45,7 +67,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
                 alt={item.title}
                 width={500}
                 height={300}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 md:h-56 object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                 <span className="inline-block px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded">
@@ -54,23 +76,50 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
               </div>
             </div>
             
-            <div className="p-4">
-              <h3 className="text-lg font-bold text-gray-800 mb-2">{item.title}</h3>
-              <div className="text-xs text-gray-500 mb-3">
+            <div className="p-4 md:p-6">
+              <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2 line-clamp-2 hover:line-clamp-none transition-all duration-300">
+                {item.title}
+              </h3>
+              <div className="text-xs text-gray-500 mb-3 flex items-center">
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
                 {item.publishedAt}
               </div>
-              <p className="text-sm text-gray-600 mb-4">{item.description}</p>
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors"
-              >
-                Read more
-              </a>
+              <p className="text-sm md:text-base text-gray-600 mb-4 line-clamp-3 md:line-clamp-4">
+                {item.description}
+              </p>
+              <div className="flex justify-between items-center">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 md:px-6 md:py-3 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  Read more
+                </a>
+                <button className="p-2 rounded-full hover:bg-gray-100">
+                  <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         ))}
+      </div>
+      
+      {/* Pagination for desktop - shown only on larger screens */}
+      <div className="hidden md:flex justify-center mt-12">
+        <nav className="flex items-center space-x-2">
+          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-500 hover:bg-gray-50">Previous</button>
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">1</button>
+          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">2</button>
+          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">3</button>
+          <span className="px-4 py-2 text-gray-600">...</span>
+          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">8</button>
+          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-500 hover:bg-gray-50">Next</button>
+        </nav>
       </div>
     </div>
   );
