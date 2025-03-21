@@ -71,7 +71,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
                 className="w-full h-48 md:h-56 object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <span className="inline-block px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded">
+                <span className="inline-block px-2 py-1 bg-gray-500 text-black text-xs font-medium rounded">
                   {item.source.name}
                 </span>
               </div>
@@ -101,7 +101,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-4 py-2 md:px-6 md:py-3 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors"
+                  className="inline-block px-4 py-2 md:px-6 md:py-3 bg-gray-500 text-black text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors"
                 >
                   Read more
                 </a>
