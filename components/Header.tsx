@@ -6,6 +6,7 @@ export default function Header() {
       {/* Website Name */}
       <h2 className="text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 text-center">
         News
+        
       </h2>
     </div>
   );
