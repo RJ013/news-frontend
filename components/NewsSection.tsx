@@ -11,7 +11,7 @@ type Article = {
   url: string;
   image: string;
   publishedAt: string;
-  source: {
+  source?: {
     name: string;
     url: string;
   };
@@ -78,7 +78,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
               <div className="p-6 md:w-1/2 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm text-gray-500">{formatDate(item.publishedAt)}</span>
-                  <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full">{item.source.name}</span>
+                  <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full">{item.source?.name}</span>
                 </div>
                 <p className="text-black font-bold mb-3">{item.title}</p>
                 <p className="text-gray-600 mb-4">{item.description}</p>
