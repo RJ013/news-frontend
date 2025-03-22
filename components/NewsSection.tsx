@@ -22,8 +22,10 @@ type NewsSectionProps = {
 };
 
 const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
-  // Create a reversed copy of the news array
-  const reversedNews = [...news].reverse();
+  // Sort news by publishedAt date, putting the most recent items first
+  const sortedNews = [...news].sort((a, b) => {
+    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+  });
 
   // Format date function (similar to what would be in @/lib/utils)
   const formatDate = (dateString: string) => {
@@ -62,7 +64,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
       </div>
       
       <div className="grid grid-cols-1 gap-8 mx-auto" style={{ maxWidth: "90%", margin: "0 auto" }}>
-        {reversedNews.map((item, index) => (
+        {sortedNews.map((item, index) => (
           <div key={`${item.id}-${index}`} className="h-full flex flex-col md:flex-row md:items-center justify-center px-4 py-6 md:py-0">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full mx-auto flex flex-col md:flex-row hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
               <div className="relative h-56 md:h-auto md:w-1/2">
@@ -78,7 +80,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
                   <span className="text-sm text-gray-500">{formatDate(item.publishedAt)}</span>
                   <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full">{item.source.name}</span>
                 </div>
-                <p className=" text-black font-bold mb-3">{item.title}</p>
+                <p className="text-black font-bold mb-3">{item.title}</p>
                 <p className="text-gray-600 mb-4">{item.description}</p>
                 <br/>
                 <a
@@ -87,7 +89,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
                   rel="noopener noreferrer"
                   className="mt-auto flex items-center text-blue-500 font-large hover:underline"
                 >
-                  <span className="text-sm bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full " >Read full story</span>
+                  <span className="text-sm bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full">Read full story</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
