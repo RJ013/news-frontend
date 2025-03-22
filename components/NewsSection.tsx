@@ -1,6 +1,5 @@
 "use client";
 
-
 import React from "react";
 import Image from "next/image";
 
@@ -26,10 +25,18 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
   // Create a reversed copy of the news array
   const reversedNews = [...news].reverse();
 
+  // Format date function (similar to what would be in @/lib/utils)
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  };
+
   return (
-    // Added mx-auto to center the container and added specific margins
     <div className="py-12 px-4 sm:px-8 lg:px-16 bg-gray-100 mx-auto max-w-screen-xl lg:max-w-screen-2xl" style={{ margin: "0 auto" }}>
-      {/* More responsive header with better font sizing for desktop */}
       <div className="flex justify-between items-center mb-10">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">Latest News</h2>
         <div className="hidden md:flex space-x-2">
@@ -54,76 +61,41 @@ const NewsSection: React.FC<NewsSectionProps> = ({ news }) => {
         </div>
       </div>
       
-      {/* Added mx-auto to center the grid and added specific margins */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mx-auto" style={{ maxWidth: "90%", margin: "0 auto" }}>
+      <div className="grid grid-cols-1 gap-8 mx-auto" style={{ maxWidth: "90%", margin: "0 auto" }}>
         {reversedNews.map((item, index) => (
-          // Enhanced card with consistent padding on all sides and no text truncation
-          <div
-            key={`${item.id}-${index}`}
-            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
-          >
-            <div className="relative">
-              <Image
-                src={item.image}
-                alt={item.title}
-                width={500}
-                height={300}
-                className="w-full h-48 md:h-56 object-cover"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <span className="inline-block px-2 py-1 bg-gray-500 text-black text-xs font-medium rounded">
-                  {item.source.name}
-                </span>
+          <div key={`${item.id}-${index}`} className="h-full flex flex-col md:flex-row md:items-center justify-center px-4 py-6 md:py-0">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full mx-auto flex flex-col md:flex-row hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="relative h-56 md:h-auto md:w-1/2">
+                <Image
+                  src={item.image || "/placeholder.svg?height=400&width=600"}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
-            </div>
-            
-            {/* Even padding on all sides (6 on mobile, 8 on larger screens) */}
-            <div className="p-6 md:p-8 flex-grow flex flex-col">
-              <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
-                {item.title}
-              </h3>
-              <div className="text-xs text-gray-500 mb-4 flex items-center">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {item.publishedAt}
-              </div>
-              
-              {/* Full description with no truncation or ellipsis */}
-              <div className="mb-6 flex-grow">
-                <p className="text-sm md:text-base text-gray-600">
-                  {item.description}
-                </p>
-              </div>
-              
-              <div className="flex justify-between items-center mt-auto">
+              <div className="p-6 md:w-1/2 flex flex-col">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-gray-500">{formatDate(item.publishedAt)}</span>
+                  <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full">{item.source.name}</span>
+                </div>
+                <p className=" text-black font-bold mb-3">{item.title}</p>
+                <p className="text-gray-600 mb-4">{item.description}</p>
+                <br/>
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-4 py-2 md:px-6 md:py-3 bg-gray-500 text-black text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors"
+                  className="mt-auto flex items-center text-blue-500 font-large hover:underline"
                 >
-                  Read more
+                  <span className="text-sm bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full " >Read full story</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 bg-blue-500/10 text-blue-500 px-2 py-1 rounded-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
                 </a>
-                
               </div>
             </div>
           </div>
         ))}
-      </div>
-      
-      {/* Pagination for desktop with ellipsis removed */}
-      <div className="hidden md:flex justify-center mt-12">
-        <nav className="flex items-center space-x-2">
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-500 hover:bg-gray-50">Previous</button>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">1</button>
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">2</button>
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">3</button>
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">4</button>
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">5</button>
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">8</button>
-          <button className="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-500 hover:bg-gray-50">Next</button>
-        </nav>
       </div>
     </div>
   );
