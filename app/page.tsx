@@ -26,7 +26,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const newsResponse = await axios.get("https://news-backend-fmu2.onrender.com/news");
+        const newsResponse = await axios.get("https://news-backend-813n.onrender.com/news");
         setNews(newsResponse.data || []);
       } catch (error) {
         console.error("Error fetching data:", error);
