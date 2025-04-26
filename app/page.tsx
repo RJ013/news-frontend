@@ -39,8 +39,10 @@ export default function Home() {
     const fetchData = async () => {
       setLoading(true);
       try {
+        const apiKey = process.env.NEXT_PUBLIC_GNEWS_API_KEY;
+
         const response = await fetch(
-          `https://gnews.io/api/v4/top-headlines?category=${activeCategory.toLowerCase()}&apikey=a8079f81525d25fb4487b07f63f46631&country=in`
+          `https://gnews.io/api/v4/top-headlines?category=${activeCategory.toLowerCase()}&apikey=${apiKey}&country=in`
         );
 
         if (!response.ok) {
