@@ -99,69 +99,70 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-  <Header />
+      <Header />
 
-  <div className="flex-grow flex items-center justify-center px-4">
-    {/* Category Selector */}
-    <div className="w-full max-w-xs">
-      <div className="relative">
-        <button
-          className="w-full flex items-center justify-between bg-gray-800 px-4 py-3 rounded-lg shadow-md border border-gray-700 text-gray-100 hover:bg-gray-700"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowCategoryMenu(!showCategoryMenu);
-          }}
-        >
-          <span className="font-semibold text-gray-100">{activeCategory}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`h-5 w-5 text-gray-300 transition-transform ${showCategoryMenu ? 'rotate-180' : ''}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-
-        {showCategoryMenu && (
-          <div className="absolute z-20 mt-1 w-full bg-gray-800 rounded-lg shadow-lg border border-gray-700">
-            {categories.map((category) => (
+      <div className="flex-grow flex items-center justify-center px-4">
+        {/* Category Selector */}
+        {!loading && (
+          <div className="w-full max-w-xs">
+            <div className="relative">
               <button
-                key={category}
-                className={`w-full text-left px-4 py-3 border-b border-gray-700 last:border-0 ${
-                  activeCategory === category
-                    ? "bg-gray-700 text-blue-400 font-semibold"
-                    : "text-gray-100 hover:bg-gray-700"
-                }`}
+                className="w-full flex items-center justify-between bg-gray-800 px-4 py-3 rounded-lg shadow-md border border-gray-700 text-gray-100 hover:bg-gray-700"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleCategoryChange(category);
+                  setShowCategoryMenu(!showCategoryMenu);
                 }}
               >
-                {category}
+                <span className="font-semibold text-gray-100">{activeCategory}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-5 w-5 text-gray-300 transition-transform ${showCategoryMenu ? 'rotate-180' : ''}`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </button>
-            ))}
+
+              {showCategoryMenu && (
+                <div className="absolute z-20 mt-1 w-full bg-gray-800 rounded-lg shadow-lg border border-gray-700">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      className={`w-full text-left px-4 py-3 border-b border-gray-700 last:border-0 ${
+                        activeCategory === category
+                          ? "bg-gray-700 text-blue-400 font-semibold"
+                          : "text-gray-100 hover:bg-gray-700"
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCategoryChange(category);
+                      }}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
-    </div>
-  </div>
 
-  {loading ? (
-    <div className="flex justify-center items-center py-10">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mx-auto mb-3"></div>
-        <p className="text-gray-500 text-sm">Loading news...</p>
-      </div>
+      {loading ? (
+         <div className="flex justify-center items-center min-h-screen">
+         <div className="text-center">
+           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mx-auto mb-3"></div>
+           <p className="text-gray-500 text-sm">Loading news...</p>
+         </div>
+       </div>
+      ) : (
+        <NewsSection news={news} />
+      )}
     </div>
-  ) : (
-    <NewsSection news={news} />
-  )}
-</div>
-
   );
 }
